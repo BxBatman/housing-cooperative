@@ -1,6 +1,6 @@
-package repository;
+package com.politechnika.housing.repository;
 
-import model.User;
+import com.politechnika.housing.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,19 +1,17 @@
-package config;
+package com.politechnika.housing.config;
 
-import model.Authorities;
-import model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -21,11 +19,10 @@ import java.util.Properties;
 
 import static org.hibernate.cfg.AvailableSettings.*;
 
-@Configuration
 @PropertySource("classpath:db.properties")
-@EnableTransactionManagement
-@ComponentScans(value = {@ComponentScan("repository"), @ComponentScan("service"), @ComponentScan({"config"})})
-@EnableJpaRepositories(basePackages = "repository")
+@EnableWebMvc
+@ComponentScan(basePackages = "com.politechnika.housing")
+@EnableJpaRepositories(basePackages = "com.politechnika.housing.repository")
 public class AppConfig {
 
     @Autowired
@@ -51,7 +48,7 @@ public class AppConfig {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactoryBean.setDataSource(getDataSource());
-        entityManagerFactoryBean.setPackagesToScan("model");
+        entityManagerFactoryBean.setPackagesToScan("com/politechnika/housing/model");
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
