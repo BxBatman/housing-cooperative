@@ -45,11 +45,18 @@ public class OccupantController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity deleteOccupant(@PathVariable int id) {
+    public ResponseEntity deleteOccupant(@PathVariable("id") int id) {
         occupantService.delete(id);
         return ResponseEntity.ok().build();
 
     }
 
+
+    @RequestMapping(value = "/{premisesId}/{occupantId}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity addPremisesToOccupant(@PathVariable("premisesId") int premisesId, @PathVariable("occupantId") int occupantId) {
+        occupantService.addPremisesToOccupant(premisesId,occupantId);
+        return ResponseEntity.ok().build();
+    }
 
 }

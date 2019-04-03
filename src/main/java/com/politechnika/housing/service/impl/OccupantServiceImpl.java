@@ -1,26 +1,34 @@
 package com.politechnika.housing.service.impl;
 
 import com.politechnika.housing.exception.OccupantNotFoundException;
+import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Occupant;
+import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.OccupantRepository;
 import com.politechnika.housing.service.inf.OccupantService;
+import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 public class OccupantServiceImpl implements OccupantService {
 
     @Autowired
     private OccupantRepository occupantRepository;
+    @Autowired
+    private PremisesService premisesService;
 
     @Override
     public int save(Occupant occupant) {
-       return occupantRepository.saveAndFlush(occupant).getId();
+        return occupantRepository.saveAndFlush(occupant).getId();
     }
 
     @Override
     public Occupant get(int id) throws OccupantNotFoundException {
-      return  occupantRepository.findById(id).orElseThrow(() -> new OccupantNotFoundException("User id:" + id));
+        return occupantRepository.findById(id).orElseThrow(() -> new OccupantNotFoundException("User id:" + id));
     }
 
     @Override
@@ -31,6 +39,32 @@ public class OccupantServiceImpl implements OccupantService {
     @Override
     public void delete(int id) {
         occupantRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void addPremisesToOccupant(int premisesId, int occupantId) {
+        Occupant occupant = null;
+        Premises premises = null;
+
+        try {
+            occupant = get(occupantId);
+        } catch (OccupantNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            premises = premisesService.get(premisesId);
+        } catch (PremisesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (occupant != null && premises !=null) {
+            Set<Premises> premisesSet = occupant.getPremises();
+            premisesSet.add(premises);
+            occupant.setPremises(premisesSet);
+            occupantRepository.save(occupant);
+        }
     }
 
 

@@ -1,12 +1,15 @@
 package com.politechnika.housing.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "COST")
-@Data
+@Getter
+@Setter
 public class Cost {
 
     @Id

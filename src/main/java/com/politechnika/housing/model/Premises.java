@@ -1,6 +1,8 @@
 package com.politechnika.housing.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "PREMISES")
-@Data
+@Getter
+@Setter
 public class Premises {
 
     @Id
@@ -16,6 +19,6 @@ public class Premises {
     @Column(name = "ID")
     private int id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cost> costs =  new ArrayList<>();
 }
