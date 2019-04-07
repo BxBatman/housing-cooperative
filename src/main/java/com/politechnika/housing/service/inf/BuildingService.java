@@ -12,4 +12,8 @@ public interface BuildingService {
     int update(Building building);
 
     void delete(int id);
+
+    void addPremisesToBuilding(int premisesId, int buildingId);
+
+    void deletePremisesFromBuidling(int premisesId, int buildingId);
 }

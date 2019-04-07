@@ -1,6 +1,7 @@
 package com.politechnika.housing.controller;
 
 import com.politechnika.housing.exception.PremisesNotFoundException;
+import com.politechnika.housing.model.Cost;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.apache.log4j.Logger;
@@ -51,5 +52,20 @@ public class PremisesController {
         premisesService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @RequestMapping(value = "/cost/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity addCostToPremises(@RequestBody Cost cost, @PathVariable("id") int id) {
+        premisesService.addCostToPremises(cost,id);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/{costId}/{premisesId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deleteCostFromPremises(@PathVariable("costId") int costId, @PathVariable("premisesId") int premisesId) {
+        premisesService.deleteCostFromPremises(costId, premisesId);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

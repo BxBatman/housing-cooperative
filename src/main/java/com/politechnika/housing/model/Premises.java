@@ -1,6 +1,5 @@
 package com.politechnika.housing.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +17,10 @@ public class Premises {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private int id;
+
+
+    @Column(name = "NUMBER")
+    private String number;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cost> costs =  new ArrayList<>();

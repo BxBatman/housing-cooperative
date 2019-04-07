@@ -1,8 +1,6 @@
 package com.politechnika.housing.config;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import sun.security.util.Password;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
