@@ -14,4 +14,6 @@ public interface OccupantService {
     void delete(int id);
 
     void addPremisesToOccupant(int premisesId, int occupantId);
+
+    void deletePremisesFromOccupant(int premisesId, int occupantId);
 }

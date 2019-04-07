@@ -36,8 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/***").hasRole("ADMIN")
-                .antMatchers("/occupant/**").hasRole("ADMIN")
+                .antMatchers("/user/***").hasRole(WebSecurityTokens.ROLE_ADMIN)
+                .antMatchers("/occupant/**").hasRole(WebSecurityTokens.ROLE_ADMIN)
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

@@ -6,6 +6,7 @@ import com.politechnika.housing.service.inf.OccupantService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,6 +57,13 @@ public class OccupantController {
     @ResponseBody
     public ResponseEntity addPremisesToOccupant(@PathVariable("premisesId") int premisesId, @PathVariable("occupantId") int occupantId) {
         occupantService.addPremisesToOccupant(premisesId,occupantId);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/{premisesId}/{occupantId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deletePremisesFromOcuppant(@PathVariable("premisesId") int premisesId, @PathVariable("occupantId") int occupantId) {
+        occupantService.deletePremisesFromOccupant(premisesId, occupantId);
         return ResponseEntity.ok().build();
     }
 
