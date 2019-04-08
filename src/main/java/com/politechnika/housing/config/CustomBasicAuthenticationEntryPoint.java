@@ -12,9 +12,9 @@ import java.io.PrintWriter;
 public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
+        response.setHeader("WWW-Authenticate", "Basic realm=" + getRealmName());
 
         PrintWriter writer = response.getWriter();
         writer.println("HTTP Status 401 :" + authException.getMessage());
