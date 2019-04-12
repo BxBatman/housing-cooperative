@@ -1,5 +1,6 @@
 package com.politechnika.housing.controller;
 
+import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Cost;
 import com.politechnika.housing.model.Premises;
@@ -65,6 +66,12 @@ public class PremisesController {
     public ResponseEntity deleteCostFromPremises(@PathVariable("costId") int costId, @PathVariable("premisesId") int premisesId) {
         premisesService.deleteCostFromPremises(costId, premisesId);
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/occupant/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getPremiesForOccupant(@PathVariable("id") int occupantId) throws OccupantNotFoundException {
+       return ResponseEntity.ok(premisesService.getPremisesForSpecificOccupant(occupantId));
     }
 
 

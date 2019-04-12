@@ -67,4 +67,10 @@ public class OccupantController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getAllOccupants(){
+        return ResponseEntity.ok(occupantService.getAll());
+    }
+
 }

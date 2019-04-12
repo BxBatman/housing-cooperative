@@ -40,8 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 .authorizeRequests()
-                .antMatchers("/user/login/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_OCCUPANT")
-                .antMatchers("/occupant/**").hasRole(WebSecurityTokens.ROLE_ADMIN)
+                .antMatchers("/user/login/**").hasAnyAuthority(WebSecurityTokens.ROLE_ADMIN, WebSecurityTokens.ROLE_MANAGER, WebSecurityTokens.ROLE_OCCUPANT)
+                .antMatchers("/occupant/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
+                .antMatchers("/building/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
                 .and().headers().frameOptions().disable()
                 .and().csrf().ignoringAntMatchers("h2/**").and().
                 authorizeRequests().antMatchers("/h2/**").permitAll()

@@ -68,4 +68,10 @@ public class BuildingController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getAllBuildings(){
+        return ResponseEntity.ok(buildingService.getAll());
+    }
+
 }

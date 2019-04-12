@@ -10,6 +10,7 @@ import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -86,5 +87,10 @@ public class BuildingServiceImpl implements BuildingService {
         building.setPremises(premisesSet);
         save(building);
 
+    }
+
+    @Override
+    public List<Building> getAll() {
+        return buildingRepository.findAll();
     }
 }

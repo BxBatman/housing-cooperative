@@ -3,6 +3,8 @@ package com.politechnika.housing.service.inf;
 import com.politechnika.housing.exception.BuildingNotFoundException;
 import com.politechnika.housing.model.Building;
 
+import java.util.List;
+
 public interface BuildingService {
 
     int save(Building building);
@@ -16,4 +18,6 @@ public interface BuildingService {
     void addPremisesToBuilding(int premisesId, int buildingId);
 
     void deletePremisesFromBuidling(int premisesId, int buildingId);
+
+    List<Building> getAll();
 }

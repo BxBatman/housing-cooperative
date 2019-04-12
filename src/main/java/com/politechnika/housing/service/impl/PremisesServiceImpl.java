@@ -1,20 +1,26 @@
 package com.politechnika.housing.service.impl;
 
+import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Cost;
+import com.politechnika.housing.model.Occupant;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.PremisesRepository;
+import com.politechnika.housing.service.inf.OccupantService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PremisesServiceImpl implements PremisesService {
 
     @Autowired
     private PremisesRepository premisesRepository;
+    @Autowired
+    private OccupantService occupantService;
 
     @Override
     public int save(Premises premises) {
@@ -71,6 +77,12 @@ public class PremisesServiceImpl implements PremisesService {
         premises.setCosts(costs);
         premisesRepository.save(premises);
 
+    }
+
+    @Override
+    public Set<Premises> getPremisesForSpecificOccupant(int occupantId) throws OccupantNotFoundException {
+        Occupant occupant = occupantService.get(occupantId);
+        return occupant.getPremises();
     }
 
 
