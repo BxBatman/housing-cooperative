@@ -1,5 +1,6 @@
 package com.politechnika.housing.service.impl;
 
+import com.politechnika.housing.config.MailConfig;
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Authorities;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -30,17 +32,30 @@ public class OccupantServiceImpl implements OccupantService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthoritiesService authoritiesService;
-
     @Override
     public int save(Occupant occupant) {
-        String password = occupant.getUser().getPassword();
-        occupant.getUser().setPassword(passwordEncoder.encode(password));
 
         Authorities authorities = new Authorities();
-        authorities.setAuthority("ROLE_OCCUPANT");
-        authorities.setUsername(occupant.getUser().getUsername());
+        authorities.setUsername(occupant.getFirstname()+occupant.getLastname());
+        authorities.setAuthority("ROLE_ADMIN");
+        MailConfig.configure();
+
+        String pass = new Random().ints(10, 33, 122).collect(StringBuilder::new,
+                StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        User user = new User();
+        user.setUsername(occupant.getFirstname()+occupant.getLastname());
+        user.setPassword(passwordEncoder.encode(pass));
+        occupant.setUser(user);
         authoritiesService.save(authorities);
-        return occupantRepository.saveAndFlush(occupant).getId();
+
+        int id =occupantRepository.saveAndFlush(occupant).getId();
+
+        MailConfig.sendMail("dev312.test@gmail.com",occupant.getFirstname(),occupant.getLastname(),pass);
+
+        return id;
+
     }
 
     @Override

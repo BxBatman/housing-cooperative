@@ -10,7 +10,12 @@ import java.io.Serializable;
 @Data
 public class Authorities implements Serializable {
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private int id;
+
     @Column(name = "AUTHORITY")
     private String authority;
 

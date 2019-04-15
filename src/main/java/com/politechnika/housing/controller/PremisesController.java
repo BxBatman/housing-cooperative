@@ -4,6 +4,7 @@ import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Cost;
 import com.politechnika.housing.model.Premises;
+import com.politechnika.housing.service.inf.CostService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class PremisesController {
 
     @Autowired
     private PremisesService premisesService;
+
+    @Autowired
+    private CostService costService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -70,9 +74,14 @@ public class PremisesController {
 
     @RequestMapping(value = "/occupant/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getPremiesForOccupant(@PathVariable("id") int occupantId) throws OccupantNotFoundException {
+    public ResponseEntity getPremisesForOccupant(@PathVariable("id") int occupantId) throws OccupantNotFoundException {
        return ResponseEntity.ok(premisesService.getPremisesForSpecificOccupant(occupantId));
     }
 
+    @RequestMapping(value = "/costs/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getCostsForPremises(@PathVariable("id") int premisesId) throws PremisesNotFoundException {
+        return ResponseEntity.ok(costService.getCostsForSpecificPremises(premisesId));
+    }
 
 }

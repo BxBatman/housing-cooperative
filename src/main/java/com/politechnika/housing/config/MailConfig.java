@@ -11,6 +11,7 @@ public class MailConfig {
 
     private static Properties properties;
     private static Session session;
+    private static final String passwordMail = "infernus3";
 
 
 
@@ -26,21 +27,19 @@ public class MailConfig {
         session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("dev312.test@gmail.com", "infernus3");
+                return new PasswordAuthentication("dev312.test@gmail.com", passwordMail);
             }
         });
     }
 
     public static void sendMail(String email, String firstName, String lastName, String password) {
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("dev312.test@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject("Test");
-            message.setText(firstName + " " + lastName);
+            message.setText(firstName+""+lastName + " "  + password);
             Transport.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
