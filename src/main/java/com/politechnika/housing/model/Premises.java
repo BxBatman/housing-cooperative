@@ -23,5 +23,5 @@ public class Premises {
     private String number;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Cost> costs =  new ArrayList<>();
+    private List<Bill> bills =  new ArrayList<>();
 }

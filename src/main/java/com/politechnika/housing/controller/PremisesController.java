@@ -2,9 +2,9 @@ package com.politechnika.housing.controller;
 
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
-import com.politechnika.housing.model.Cost;
+import com.politechnika.housing.model.Bill;
 import com.politechnika.housing.model.Premises;
-import com.politechnika.housing.service.inf.CostService;
+import com.politechnika.housing.service.inf.BillService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PremisesController {
     private PremisesService premisesService;
 
     @Autowired
-    private CostService costService;
+    private BillService billService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -58,17 +58,17 @@ public class PremisesController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/cost/{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/bill/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addCostToPremises(@RequestBody Cost cost, @PathVariable("id") int id) {
-        premisesService.addCostToPremises(cost,id);
+    public ResponseEntity addBillToPremises(@RequestBody Bill bill, @PathVariable("id") int id) {
+        premisesService.addBillToPremises(bill,id);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/{costId}/{premisesId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{billId}/{premisesId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity deleteCostFromPremises(@PathVariable("costId") int costId, @PathVariable("premisesId") int premisesId) {
-        premisesService.deleteCostFromPremises(costId, premisesId);
+    public ResponseEntity deleteBillFromPremises(@PathVariable("billId") int billId, @PathVariable("premisesId") int premisesId) {
+        premisesService.deleteBillFromPremises(billId, premisesId);
         return ResponseEntity.ok().build();
     }
 
@@ -78,10 +78,10 @@ public class PremisesController {
        return ResponseEntity.ok(premisesService.getPremisesForSpecificOccupant(occupantId));
     }
 
-    @RequestMapping(value = "/costs/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/bills/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getCostsForPremises(@PathVariable("id") int premisesId) throws PremisesNotFoundException {
-        return ResponseEntity.ok(costService.getCostsForSpecificPremises(premisesId));
+    public ResponseEntity getBillsForPremises(@PathVariable("id") int premisesId) throws PremisesNotFoundException {
+        return ResponseEntity.ok(billService.getBillsForSpecificPremises(premisesId));
     }
 
 }

@@ -44,6 +44,10 @@ public class OccupantServiceImpl implements OccupantService {
                 StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
+        String token = new Random().ints(10, 33, 122).collect(StringBuilder::new,
+                StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
         User user = new User();
         user.setUsername(occupant.getFirstname()+occupant.getLastname());
         user.setPassword(passwordEncoder.encode(pass));

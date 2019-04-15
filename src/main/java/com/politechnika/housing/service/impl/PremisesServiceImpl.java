@@ -2,7 +2,7 @@ package com.politechnika.housing.service.impl;
 
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
-import com.politechnika.housing.model.Cost;
+import com.politechnika.housing.model.Bill;
 import com.politechnika.housing.model.Occupant;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.PremisesRepository;
@@ -43,7 +43,7 @@ public class PremisesServiceImpl implements PremisesService {
     }
 
     @Override
-    public void addCostToPremises(Cost cost, int premisesId) {
+    public void addBillToPremises(Bill bill, int premisesId) {
         Premises premises = null;
 
         try {
@@ -53,16 +53,16 @@ public class PremisesServiceImpl implements PremisesService {
         }
 
         if (premises != null) {
-           List<Cost> costs =  premises.getCosts();
-           costs.add(cost);
-           premises.setCosts(costs);
+           List<Bill> bills =  premises.getBills();
+           bills.add(bill);
+           premises.setBills(bills);
            premisesRepository.save(premises);
         }
 
     }
 
     @Override
-    public void deleteCostFromPremises(int costId, int premisesId) {
+    public void deleteBillFromPremises(int billId, int premisesId) {
         Premises premises = null;
 
         try {
@@ -71,10 +71,10 @@ public class PremisesServiceImpl implements PremisesService {
             e.printStackTrace();
         }
 
-        List<Cost> costs = premises.getCosts();
+        List<Bill> bills = premises.getBills();
 
-        costs.removeIf(cost -> cost.getId() == costId);
-        premises.setCosts(costs);
+        bills.removeIf(bill -> bill.getId() == billId);
+        premises.setBills(bills);
         premisesRepository.save(premises);
 
     }
