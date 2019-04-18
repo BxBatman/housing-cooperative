@@ -1,6 +1,7 @@
 package com.politechnika.housing.service.impl;
 
 import com.politechnika.housing.config.MailConfig;
+import com.politechnika.housing.config.WebSecurityTokens;
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Authorities;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class OccupantServiceImpl implements OccupantService {
@@ -37,26 +39,26 @@ public class OccupantServiceImpl implements OccupantService {
 
         Authorities authorities = new Authorities();
         authorities.setUsername(occupant.getFirstname()+occupant.getLastname());
-        authorities.setAuthority("ROLE_ADMIN");
+        authorities.setAuthority(WebSecurityTokens.ROLE_OCCUPANT);
         MailConfig.configure();
 
         String pass = new Random().ints(10, 33, 122).collect(StringBuilder::new,
                 StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        String token = new Random().ints(10, 33, 122).collect(StringBuilder::new,
-                StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+        String token = UUID.randomUUID().toString();
+
 
         User user = new User();
         user.setUsername(occupant.getFirstname()+occupant.getLastname());
         user.setPassword(passwordEncoder.encode(pass));
+        user.setActivationToken(token);
         occupant.setUser(user);
         authoritiesService.save(authorities);
 
         int id =occupantRepository.saveAndFlush(occupant).getId();
 
-        MailConfig.sendMail("dev312.test@gmail.com",occupant.getFirstname(),occupant.getLastname(),pass);
+        MailConfig.sendMail("dev312.test@gmail.com",occupant.getFirstname(),occupant.getLastname(),pass,token);
 
         return id;
 

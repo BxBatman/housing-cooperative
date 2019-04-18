@@ -32,14 +32,14 @@ public class MailConfig {
         });
     }
 
-    public static void sendMail(String email, String firstName, String lastName, String password) {
+    public static void sendMail(String email, String firstName, String lastName, String password, String token) {
 
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("dev312.test@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("Test");
-            message.setText(firstName+""+lastName + " "  + password);
+            message.setSubject("Activation");
+            message.setText(firstName+""+lastName + " "  + password + "   http://localhost:3000/activation/" + token);
             Transport.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

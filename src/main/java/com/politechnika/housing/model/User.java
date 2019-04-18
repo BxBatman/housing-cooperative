@@ -24,5 +24,8 @@ public class User implements Serializable {
     @Column(name = "ENABLED", nullable = false)
     private boolean enabled;
 
+    @Column(name = "ACTIVATION_TOKEN")
+    private String activationToken;
+
 
 }

@@ -1,12 +1,9 @@
 package com.politechnika.housing.controller;
 
-import com.politechnika.housing.config.MailConfig;
-import com.politechnika.housing.model.Occupant;
-import com.politechnika.housing.model.User;
 import com.politechnika.housing.model.jsonModel.RoleJsonModel;
-import com.politechnika.housing.repository.AuthoritiesRepository;
 import com.politechnika.housing.repository.UserRepository;
 import com.politechnika.housing.service.inf.AuthoritiesService;
+import com.politechnika.housing.service.inf.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +21,10 @@ public class UserController {
     @Autowired
     AuthoritiesService authoritiesService;
 
+    @Autowired
+    UserService userService;
 
-    @RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
-    public ResponseEntity getUser(@PathVariable("username") String username) {
-        User user = userRepository.findUserByUsername(username);
-        return ResponseEntity.ok(user);
-    }
+
 
     @RequestMapping(value = "/user/login/{username}", method = RequestMethod.POST)
     @ResponseBody
@@ -37,11 +32,10 @@ public class UserController {
         return authoritiesService.getUserRole(username);
     }
 
-
-    @RequestMapping(value = "/user/mail",method = RequestMethod.POST)
-    public ResponseEntity sendMail(@RequestBody Occupant occupant){
-        MailConfig.configure();
-        MailConfig.sendMail(occupant.getEmail(),occupant.getFirstname(),occupant.getLastname(),occupant.getUser().getPassword());
+    @RequestMapping(value = "/user/activate/{token}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity activateUser(@PathVariable("token") String token) {
+        userService.activateAccount(token);
         return ResponseEntity.ok().build();
     }
 
