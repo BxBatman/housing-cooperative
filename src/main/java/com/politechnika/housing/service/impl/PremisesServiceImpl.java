@@ -54,6 +54,8 @@ public class PremisesServiceImpl implements PremisesService {
 
         if (premises != null) {
            List<Bill> bills =  premises.getBills();
+           bill.setAccepted(false);
+           bill.setDone(true);
            bills.add(bill);
            premises.setBills(bills);
            premisesRepository.save(premises);

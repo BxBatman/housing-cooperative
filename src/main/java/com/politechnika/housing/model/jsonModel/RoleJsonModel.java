@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class RoleJsonModel {
+    private int id;
     private String role;
 }
