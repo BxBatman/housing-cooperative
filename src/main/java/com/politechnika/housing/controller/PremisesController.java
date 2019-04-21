@@ -84,4 +84,11 @@ public class PremisesController {
         return ResponseEntity.ok(billService.getBillsForSpecificPremises(premisesId));
     }
 
+    @RequestMapping(value = "/bill/accept/{id}",method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity setBillAccepted(@PathVariable("id") int billId) {
+        premisesService.setBillAccepted(billId);
+        return ResponseEntity.ok().build();
+    }
+
 }

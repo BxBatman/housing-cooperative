@@ -1,11 +1,13 @@
 package com.politechnika.housing.service.impl;
 
+import com.politechnika.housing.exception.BillNotFoundException;
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Bill;
 import com.politechnika.housing.model.Occupant;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.PremisesRepository;
+import com.politechnika.housing.service.inf.BillService;
 import com.politechnika.housing.service.inf.OccupantService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class PremisesServiceImpl implements PremisesService {
     private PremisesRepository premisesRepository;
     @Autowired
     private OccupantService occupantService;
+    @Autowired
+    private BillService billService;
 
     @Override
     public int save(Premises premises) {
@@ -85,6 +89,18 @@ public class PremisesServiceImpl implements PremisesService {
     public Set<Premises> getPremisesForSpecificOccupant(int occupantId) throws OccupantNotFoundException {
         Occupant occupant = occupantService.get(occupantId);
         return occupant.getPremises();
+    }
+
+    @Override
+    public void setBillAccepted(int billId) {
+        Bill bill = null;
+        try {
+          bill = billService.get(billId);
+        } catch (BillNotFoundException e) {
+            e.printStackTrace();
+        }
+        bill.setAccepted(true);
+        billService.save(bill);
     }
 
 
