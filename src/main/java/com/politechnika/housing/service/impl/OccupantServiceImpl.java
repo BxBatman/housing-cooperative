@@ -97,9 +97,10 @@ public class OccupantServiceImpl implements OccupantService {
             e.printStackTrace();
         }
 
-        if (occupant != null && premises !=null) {
+        if (occupant != null && premises !=null && premises.getOccupant() == null) {
             Set<Premises> premisesSet = occupant.getPremises();
             premisesSet.add(premises);
+            premises.setOccupant(occupant);
             occupant.setPremises(premisesSet);
             occupantRepository.save(occupant);
         }

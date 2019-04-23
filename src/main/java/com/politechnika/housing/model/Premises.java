@@ -1,5 +1,6 @@
 package com.politechnika.housing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,11 @@ public class Premises {
 
     @Column(name = "NUMBER")
     private String number;
+
+    @ManyToOne
+    @JoinColumn(name = "occupant_id")
+    @JsonIgnore
+    private Occupant occupant;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bill> bills =  new ArrayList<>();

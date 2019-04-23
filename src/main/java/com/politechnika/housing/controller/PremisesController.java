@@ -91,4 +91,10 @@ public class PremisesController {
         return ResponseEntity.ok().build();
     }
 
+
+    @RequestMapping(value = "/available", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getAllAvailablePremies(){
+        return ResponseEntity.ok(premisesService.getAllAvailablePremises());
+    }
 }

@@ -1,13 +1,17 @@
 package com.politechnika.housing.service.impl;
 
 import com.politechnika.housing.exception.BillNotFoundException;
+import com.politechnika.housing.exception.BuildingNotFoundException;
 import com.politechnika.housing.exception.OccupantNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Bill;
+import com.politechnika.housing.model.Building;
 import com.politechnika.housing.model.Occupant;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.PremisesRepository;
+import com.politechnika.housing.service.impl.converter.PremisesBillConverter;
 import com.politechnika.housing.service.inf.BillService;
+import com.politechnika.housing.service.inf.BuildingService;
 import com.politechnika.housing.service.inf.OccupantService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,8 @@ public class PremisesServiceImpl implements PremisesService {
     private OccupantService occupantService;
     @Autowired
     private BillService billService;
+    @Autowired
+    private BuildingService buildingService;
 
     @Override
     public int save(Premises premises) {
@@ -58,9 +64,7 @@ public class PremisesServiceImpl implements PremisesService {
 
         if (premises != null) {
            List<Bill> bills =  premises.getBills();
-           bill.setAccepted(false);
-           bill.setDone(true);
-           bills.add(bill);
+           bills.add(PremisesBillConverter.convert(bill));
            premises.setBills(bills);
            premisesRepository.save(premises);
         }
@@ -101,6 +105,17 @@ public class PremisesServiceImpl implements PremisesService {
         }
         bill.setAccepted(true);
         billService.save(bill);
+    }
+
+    @Override
+    public Set<Premises> getPremisesForSpecificBuidling(int buildingId) throws BuildingNotFoundException {
+        Building building = buildingService.get(buildingId);
+        return building.getPremises();
+    }
+
+    @Override
+    public Set<Premises> getAllAvailablePremises() {
+        return premisesRepository.getAllAvailablePremises();
     }
 
 

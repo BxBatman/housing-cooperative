@@ -2,6 +2,7 @@ package com.politechnika.housing.controller;
 
 import com.politechnika.housing.exception.BuildingNotFoundException;
 import com.politechnika.housing.model.Building;
+import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.service.inf.BuildingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +55,10 @@ public class BuildingController {
     }
 
 
-    @RequestMapping(value = "/{premisesId}/{buildingId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/{buildingId}",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addPremisesToBuilding(@PathVariable("premisesId") int premisesId, @PathVariable("buildingId") int buildingId) {
-        buildingService.addPremisesToBuilding(premisesId, buildingId);
+    public ResponseEntity addPremisesToBuilding(@RequestBody Premises premises, @PathVariable("buildingId") int buildingId) {
+        buildingService.addPremisesToBuilding(premises, buildingId);
         return ResponseEntity.ok().build();
     }
 
@@ -72,6 +73,12 @@ public class BuildingController {
     @ResponseBody
     public ResponseEntity getAllBuildings(){
         return ResponseEntity.ok(buildingService.getAll());
+    }
+
+    @RequestMapping(value = "/all/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getPremisesForBuilding(@PathVariable("id") int buildingId) throws BuildingNotFoundException {
+        return ResponseEntity.ok(buildingService.getPremisesForBuilding(buildingId));
     }
 
 }

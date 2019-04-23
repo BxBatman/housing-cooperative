@@ -43,9 +43,8 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void addPremisesToBuilding(int premisesId, int buildingId) {
+    public void addPremisesToBuilding(Premises premises, int buildingId) {
         Building building = null;
-        Premises premises = null;
 
         try {
             building = get(buildingId);
@@ -53,11 +52,6 @@ public class BuildingServiceImpl implements BuildingService {
             e.printStackTrace();
         }
 
-        try {
-            premises = premisesService.get(premisesId);
-        } catch (PremisesNotFoundException e) {
-            e.printStackTrace();
-        }
 
         if (building != null && premises != null) {
 
@@ -92,5 +86,12 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public List<Building> getAll() {
         return buildingRepository.findAll();
+    }
+
+    @Override
+    public Set<Premises> getPremisesForBuilding(int buildingId) throws BuildingNotFoundException {
+        Building building = get(buildingId);
+
+        return building.getPremises();
     }
 }
