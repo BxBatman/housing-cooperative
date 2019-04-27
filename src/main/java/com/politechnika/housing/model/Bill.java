@@ -1,5 +1,6 @@
 package com.politechnika.housing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,5 +41,11 @@ public class Bill {
 
     @Column(name = "DONE")
     private boolean done;
+
+
+    @ManyToOne
+    @JoinColumn(name = "bill_id")
+    @JsonIgnore
+    private Premises premises;
 
 }

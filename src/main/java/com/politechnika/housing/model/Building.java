@@ -1,5 +1,6 @@
 package com.politechnika.housing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,11 @@ public class Building {
     @Column(name = "NUMBER")
     private String number;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    @JsonIgnore
+    private Manager manager;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "building")
     private Set<Premises> premises = new HashSet<>();
 }

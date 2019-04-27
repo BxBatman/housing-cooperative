@@ -57,7 +57,7 @@ public class BuildingServiceImpl implements BuildingService {
 
             Set<Premises> premisesSet = building.getPremises();
             premisesSet.add(premises);
-
+            premises.setBuilding(building);
             building.setPremises(premisesSet);
             save(building);
         }

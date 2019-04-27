@@ -28,6 +28,11 @@ public class Premises {
     @JsonIgnore
     private Occupant occupant;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    @JsonIgnore
+    private Building building;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "premises")
     private List<Bill> bills =  new ArrayList<>();
 }
