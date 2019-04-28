@@ -38,7 +38,22 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws BuildingNotFoundException {
+        Building building = null;
+        try {
+            building = get(id);
+        } catch (BuildingNotFoundException e) {
+            throw new BuildingNotFoundException("Building not found" + id);
+        }
+
+        Set<Premises> premisesSet = building.getPremises();
+
+        for (Premises premises : premisesSet) {
+            premises.setOccupant(null);
+        }
+
+        building.setPremises(premisesSet);
+        buildingRepository.save(building);
         buildingRepository.deleteById(id);
     }
 

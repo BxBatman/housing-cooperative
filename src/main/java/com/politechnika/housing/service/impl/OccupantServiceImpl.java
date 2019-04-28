@@ -75,7 +75,21 @@ public class OccupantServiceImpl implements OccupantService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws OccupantNotFoundException {
+        Occupant occupant = null;
+        try {
+            occupant = get(id);
+        } catch (OccupantNotFoundException e) {
+            throw new OccupantNotFoundException("User id" + id);
+        }
+
+        Set<Premises> premisesList = occupant.getPremises();
+
+        for (Premises premises : premisesList) {
+            premises.setOccupant(null);
+        }
+        occupant.setPremises(premisesList);
+        occupantRepository.save(occupant);
         occupantRepository.deleteById(id);
     }
 

@@ -44,7 +44,7 @@ public class Bill {
 
 
     @ManyToOne
-    @JoinColumn(name = "bill_id")
+    @JoinColumn(name = "premises_id")
     @JsonIgnore
     private Premises premises;
 

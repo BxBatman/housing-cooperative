@@ -13,7 +13,7 @@ public interface OccupantService {
 
     int update(Occupant occupant);
 
-    void delete(int id);
+    void delete(int id) throws OccupantNotFoundException;
 
     void addPremisesToOccupant(int premisesId, int occupantId);
 

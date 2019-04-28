@@ -64,8 +64,13 @@ public class PremisesServiceImpl implements PremisesService {
 
         if (premises != null) {
            List<Bill> bills =  premises.getBills();
-           bills.add(PremisesBillConverter.convert(bill));
+
+           Bill convertedBill = PremisesBillConverter.convert(bill);
+
+           bills.add(convertedBill);
+           convertedBill.setPremises(premises);
            premises.setBills(bills);
+           billService.save(convertedBill);
            premisesRepository.save(premises);
         }
 

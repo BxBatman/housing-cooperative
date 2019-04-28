@@ -49,7 +49,7 @@ public class BuildingController {
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity deleteBuilding(@PathVariable("id") int id) {
+    public ResponseEntity deleteBuilding(@PathVariable("id") int id) throws BuildingNotFoundException {
         buildingService.delete(id);
         return ResponseEntity.ok().build();
     }

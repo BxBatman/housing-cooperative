@@ -15,7 +15,7 @@ public interface BuildingService {
 
     int update(Building building);
 
-    void delete(int id);
+    void delete(int id) throws BuildingNotFoundException;
 
     void addPremisesToBuilding(Premises premises, int buildingId);
 

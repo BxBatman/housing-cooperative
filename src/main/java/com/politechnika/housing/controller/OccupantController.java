@@ -46,7 +46,7 @@ public class OccupantController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity deleteOccupant(@PathVariable("id") int id) {
+    public ResponseEntity deleteOccupant(@PathVariable("id") int id) throws OccupantNotFoundException {
         occupantService.delete(id);
         return ResponseEntity.ok().build();
 
