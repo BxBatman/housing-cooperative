@@ -94,7 +94,23 @@ public class BuildingServiceImpl implements BuildingService {
         premisesSet.removeIf(premises -> premises.getId() == premisesId);
 
         building.setPremises(premisesSet);
-        save(building);
+
+        Premises premises = null;
+        try {
+            premises = premisesService.get(premisesId);
+        } catch (PremisesNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        premises.setOccupant(null);
+        premises.setBuilding(null);
+
+        premisesService.save(premises);
+
+        premisesService.delete(premises.getId());
+
+        buildingRepository.save(building);
 
     }
 
