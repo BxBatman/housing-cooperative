@@ -1,11 +1,14 @@
 package com.politechnika.housing.service.impl;
 
 import com.politechnika.housing.exception.BuildingNotFoundException;
+import com.politechnika.housing.exception.ManagerNotFoundException;
 import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Building;
+import com.politechnika.housing.model.Manager;
 import com.politechnika.housing.model.Premises;
 import com.politechnika.housing.repository.BuildingRepository;
 import com.politechnika.housing.service.inf.BuildingService;
+import com.politechnika.housing.service.inf.ManagerService;
 import com.politechnika.housing.service.inf.PremisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private PremisesService premisesService;
+
+    @Autowired
+    private ManagerService managerService;
 
     @Override
     public int save(Building building) {
@@ -53,6 +59,7 @@ public class BuildingServiceImpl implements BuildingService {
         }
 
         building.setPremises(premisesSet);
+        building.setManager(null);
         buildingRepository.save(building);
         buildingRepository.deleteById(id);
     }
@@ -124,5 +131,21 @@ public class BuildingServiceImpl implements BuildingService {
         Building building = get(buildingId);
 
         return building.getPremises();
+    }
+
+    @Override
+    public Set<Building> getBuildingsForManageR(int managerId) {
+        Manager manager = null;
+        try {
+           manager = managerService.get(managerId);
+        } catch (ManagerNotFoundException e) {
+            e.printStackTrace();
+        }
+        return manager.getBuildings();
+    }
+
+    @Override
+    public Set<Building> gettAllAvailableBuildings() {
+        return buildingRepository.getAllAvailableBuildings();
     }
 }

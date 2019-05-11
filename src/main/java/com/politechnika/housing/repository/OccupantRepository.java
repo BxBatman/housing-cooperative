@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface OccupantRepository extends JpaRepository<Occupant, Integer> {
 
     @Query(value= "SELECT u.id FROM Occupant u where u.user.id =:id ")
-    int getOccupantIdByUserId(@Param("id") int id);
+    Integer getOccupantIdByUserId(@Param("id") int id);
 }

@@ -47,7 +47,7 @@ public class BuildingController {
         return ResponseEntity.ok(id);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity deleteBuilding(@PathVariable("id") int id) throws BuildingNotFoundException {
         buildingService.delete(id);
@@ -55,7 +55,7 @@ public class BuildingController {
     }
 
 
-    @RequestMapping(value = "/{buildingId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/{buildingId}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity addPremisesToBuilding(@RequestBody Premises premises, @PathVariable("buildingId") int buildingId) {
         buildingService.addPremisesToBuilding(premises, buildingId);
@@ -65,13 +65,13 @@ public class BuildingController {
     @RequestMapping(value = "/{premisesId}/{buildingId}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity deletePremisesFromBuilding(@PathVariable("premisesId") int premisesId, @PathVariable("buildingId") int buildingId) {
-        buildingService.deletePremisesFromBuidling(premisesId,buildingId);
+        buildingService.deletePremisesFromBuidling(premisesId, buildingId);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getAllBuildings(){
+    public ResponseEntity getAllBuildings() {
         return ResponseEntity.ok(buildingService.getAll());
     }
 
@@ -81,4 +81,15 @@ public class BuildingController {
         return ResponseEntity.ok(buildingService.getPremisesForBuilding(buildingId));
     }
 
+    @RequestMapping(value = "/manager/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getBuildingsForManager(@PathVariable("id") int managerId) {
+        return ResponseEntity.ok(buildingService.getBuildingsForManageR(managerId));
+    }
+
+    @RequestMapping(value = "/available", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getAllAvailableBuildings() {
+        return ResponseEntity.ok(buildingService.gettAllAvailableBuildings());
+    }
 }

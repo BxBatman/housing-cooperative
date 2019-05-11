@@ -42,9 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/activate/**").permitAll()
                 .antMatchers("/occupant/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
-                .antMatchers("/building/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
+                .antMatchers("/building/**").hasAnyAuthority(WebSecurityTokens.ROLE_ADMIN, WebSecurityTokens.ROLE_MANAGER)
                 .antMatchers("/bill/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
-                .antMatchers("/manager/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
                 .and().headers().frameOptions().disable()
                 .and().csrf().ignoringAntMatchers("h2/**").and().
                 authorizeRequests().antMatchers("/h2/**").permitAll()

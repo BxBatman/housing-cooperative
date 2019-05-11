@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/manag")
 public class ManagerController {
     private static final Logger logger = Logger.getLogger(ManagerController.class);
 
@@ -55,5 +55,11 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getAll());
     }
 
+    @RequestMapping(value = "/{buildingId}/{managerId}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity addBuildingToManager(@PathVariable("buildingId") int buildingId, @PathVariable("managerId") int managerId) {
+        managerService.addBuildingToManager(buildingId, managerId);
+        return ResponseEntity.ok().build();
+    }
 
 }

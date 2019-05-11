@@ -19,11 +19,11 @@ public class PremisesBillConverter {
     public static Bill convert(Bill bill) {
         Bill convertedBill = new Bill();
         convertedBill.setId(bill.getId());
-        convertedBill.setElectricity(bill.getElectricity() * ELECTRICITY_FACTOR);
-        convertedBill.setGas(bill.getGas() * GAS_FACTOR);
-        convertedBill.setColdWater(bill.getColdWater() * COLD_WATER_FACTOR);
-        convertedBill.setHotWater(bill.getHotWater() * HOT_WATOER_FACTOR);
-        convertedBill.setHeating(bill.getHeating() * HEATING_FACTOR);
+        convertedBill.setElectricity(Math.round(bill.getElectricity() * ELECTRICITY_FACTOR*100.0)/100.0);
+        convertedBill.setGas(Math.round(bill.getGas() * GAS_FACTOR *100.0)/100.0);
+        convertedBill.setColdWater(Math.round(bill.getColdWater() * COLD_WATER_FACTOR*100.0)/100.0);
+        convertedBill.setHotWater(Math.round(bill.getHotWater() * HOT_WATOER_FACTOR*100.0)/100.0);
+        convertedBill.setHeating(Math.round(bill.getHeating() * HEATING_FACTOR*100.0)/100.0);
 
         String pattern = "dd/MM/yyyy";
         DateFormat df = new SimpleDateFormat(pattern);

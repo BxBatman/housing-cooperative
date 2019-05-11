@@ -16,4 +16,6 @@ public interface ManagerService {
     void delete(int id);
 
     List<Manager> getAll();
+
+    void addBuildingToManager(int buildingId,int managerId);
 }

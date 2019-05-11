@@ -24,4 +24,8 @@ public interface BuildingService {
     List<Building> getAll();
 
     Set<Premises> getPremisesForBuilding(int buildingId) throws BuildingNotFoundException;
+
+    Set<Building> getBuildingsForManageR(int managerId);
+
+    Set<Building> gettAllAvailableBuildings();
 }
