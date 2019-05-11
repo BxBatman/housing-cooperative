@@ -123,5 +123,10 @@ public class PremisesServiceImpl implements PremisesService {
         return premisesRepository.getAllAvailablePremises();
     }
 
+    @Override
+    public List<Premises> getAllPremises() {
+        return premisesRepository.findAll();
+    }
+
 
 }

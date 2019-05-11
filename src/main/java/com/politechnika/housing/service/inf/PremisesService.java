@@ -6,6 +6,7 @@ import com.politechnika.housing.exception.PremisesNotFoundException;
 import com.politechnika.housing.model.Bill;
 import com.politechnika.housing.model.Premises;
 
+import java.util.List;
 import java.util.Set;
 
 public interface PremisesService {
@@ -29,4 +30,6 @@ public interface PremisesService {
     Set<Premises> getPremisesForSpecificBuidling(int buildingId) throws BuildingNotFoundException;
 
     Set<Premises> getAllAvailablePremises();
+
+    List<Premises> getAllPremises();
 }
