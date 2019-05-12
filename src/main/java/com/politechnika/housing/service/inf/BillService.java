@@ -12,5 +12,5 @@ public interface BillService {
     Bill get(int id) throws BillNotFoundException;
     void save(Bill bill);
     List<Bill> getBillsForSpecificPremises(int id) throws PremisesNotFoundException;
-    byte[] getPdfForBillId(int id);
+    byte[] getPdfForBillId(String username,int id,String lang);
 }

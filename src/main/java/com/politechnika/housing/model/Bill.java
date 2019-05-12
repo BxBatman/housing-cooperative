@@ -11,12 +11,12 @@ import javax.persistence.*;
 @Table(name = "BILL")
 @Getter
 @Setter
-public class Bill {
+public class Bill implements Comparable<Bill> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "ELECTRICITY")
     private double electricity;
@@ -48,4 +48,9 @@ public class Bill {
     @JsonIgnore
     private Premises premises;
 
+
+    @Override
+    public int compareTo(Bill o) {
+        return this.getId().compareTo(o.getId());
+    }
 }

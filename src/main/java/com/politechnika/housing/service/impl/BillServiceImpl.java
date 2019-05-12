@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -38,22 +40,31 @@ public class BillServiceImpl implements BillService {
     @Override
     public List<Bill> getBillsForSpecificPremises(int id) throws PremisesNotFoundException {
         Premises premises = premisesService.get(id);
-        return premises.getBills();
+        List<Bill> bills = premises.getBills();
+        Collections.sort(bills);
+        return bills;
     }
 
     @Override
-    public byte[] getPdfForBillId(int id) {
+    public byte[] getPdfForBillId(String username,int id, String lang) {
         Bill bill = null;
         try {
             bill = get(id);
         } catch (BillNotFoundException e) {
             e.printStackTrace();
         }
+
+        if (bill!= null && !bill.getPremises().getOccupant().getUser().getUsername().equals(username)) {
+            return null;
+        }
+
         try {
-         return PdfGenerator.generate(bill);
+         return PdfGenerator.generate(bill,lang);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

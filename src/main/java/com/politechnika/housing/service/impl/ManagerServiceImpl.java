@@ -122,4 +122,31 @@ public class ManagerServiceImpl implements ManagerService {
             managerRepository.save(manager);
         }
     }
+
+    @Override
+    public void deleteBuildingFromManager(int buildingId, int managerId) {
+        Manager manager = null;
+        Building building = null;
+        try {
+            manager = get(managerId);
+        } catch (ManagerNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            building = buildingService.get(buildingId);
+        } catch (BuildingNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Set<Building> buildings = manager.getBuildings();
+
+        buildings.removeIf(b -> b.getId() == buildingId);
+        manager.setBuildings(buildings);
+        managerRepository.save(manager);
+
+        building.setManager(null);
+        buildingService.save(building);
+
+    }
 }

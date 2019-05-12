@@ -15,9 +15,13 @@ public class BillController {
     @Autowired
     private BillService billService;
 
-    @RequestMapping(value = "/pdf/{id}", method = RequestMethod.GET,produces = "application/pdf")
+    @RequestMapping(value = "/pdf/{username}/{id}/{lang}", method = RequestMethod.GET,produces = "application/pdf")
     @ResponseBody
-    public ResponseEntity getPdf(@PathVariable("id") int id) {
-       return ResponseEntity.ok(billService.getPdfForBillId(id));
+    public ResponseEntity getPdf(@PathVariable("username") String username, @PathVariable("id") int id, @PathVariable("lang") String lang) {
+       if (billService.getPdfForBillId(username,id,lang) ==null) {
+           return ResponseEntity.noContent().build();
+       } else {
+           return ResponseEntity.ok(billService.getPdfForBillId(username,id,lang));
+       }
     }
 }

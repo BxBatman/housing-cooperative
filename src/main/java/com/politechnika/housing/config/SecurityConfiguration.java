@@ -43,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/activate/**").permitAll()
                 .antMatchers("/occupant/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
                 .antMatchers("/building/**").hasAnyAuthority(WebSecurityTokens.ROLE_ADMIN, WebSecurityTokens.ROLE_MANAGER)
+                .antMatchers("/bill/pdf/**").hasAuthority(WebSecurityTokens.ROLE_OCCUPANT)
                 .antMatchers("/bill/**").hasAuthority(WebSecurityTokens.ROLE_ADMIN)
                 .and().headers().frameOptions().disable()
                 .and().csrf().ignoringAntMatchers("h2/**").and().

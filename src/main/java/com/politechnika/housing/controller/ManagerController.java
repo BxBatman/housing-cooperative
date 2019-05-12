@@ -35,7 +35,7 @@ public class ManagerController {
         return ResponseEntity.ok(id);
     }
 
-    @RequestMapping(value = "/id",method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity updateManager(@RequestBody Manager manager){
         int id = managerService.update(manager);
@@ -59,6 +59,13 @@ public class ManagerController {
     @ResponseBody
     public ResponseEntity addBuildingToManager(@PathVariable("buildingId") int buildingId, @PathVariable("managerId") int managerId) {
         managerService.addBuildingToManager(buildingId, managerId);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(value = "/{buildingId}/{managerId}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deleteBuildingFromManager(@PathVariable("buildingId") int buildingId, @PathVariable("managerId") int managerId) {
+        managerService.deleteBuildingFromManager(buildingId,managerId);
         return ResponseEntity.ok().build();
     }
 
